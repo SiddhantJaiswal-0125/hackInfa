@@ -7,6 +7,8 @@ import 'package:heck/Screens/JobStats.dart';
 import 'package:heck/Utility/fetchData.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 
+import 'Screens/temp3.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
+
+
     );
   }
 }
@@ -41,9 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
     String response = await rootBundle.loadString(path);
     data = await json.decode(response);
 
-    for (var dt in data) st.add(dt['jobName']);
-
-    // print(st);
+    for (var dt in data)
+      if (dt['dataProcessed'] != '0')
+        st.add(dt['jobName']);
   }
 
   @override
@@ -62,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool elementExist = true;
 
+  bool test = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
               textStyle: TextStyle(letterSpacing: 1.5, fontSize: 40)),
         ),
       ),
-      body: SingleChildScrollView(
+      body: test ? BarChartSample2 ():
+      SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -97,10 +103,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(15.0),
                     child: SearchBarAnimation(
                       onFieldSubmitted: (var val) {
-                        print("FIELD DPONE ");
+                        print("FIELD DONE ");
                         print(val);
                         searchtext = val;
-                        print(st);
+                        // print(st);
+
                         if (st.contains(searchtext)) {
                           print("ST CONTAINS");
                           elementExist = true;
