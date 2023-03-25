@@ -7,8 +7,6 @@ import 'package:heck/Screens/JobStats.dart';
 import 'package:heck/Utility/CustomWidgets.dart';
 import 'package:heck/Utility/fetchData.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
-
-import 'Screens/temp3.dart';
 import 'models/logData.dart';
 
 void main() async {
@@ -56,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       st.add(li.jobName);
 
     print("-----------------------------------------------------");
-    print(elements);
+
 
 
 
@@ -108,11 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     textStyle: TextStyle(letterSpacing: 1.5, fontSize: 40)),
               ),
             ),
-            body: test
-                ? BarChartSample2(
-                    filteredData: [],
-                  )
-                : SingleChildScrollView(
+            body: SingleChildScrollView(
                     child: Column(
                       children: [
                         Container(
@@ -205,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               padding:
                                                   const EdgeInsets.all(18.0),
                                               child: Text(
-                                                "This Job ID Is not present at the moment, \n Please try again later",
+                                                "This Job Id is not present at the moment, \n Please try with a Vaild Job Id. ",
                                                 style: GoogleFonts.lato(
                                                     textStyle: const TextStyle(
                                                         fontSize: 14,
@@ -244,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: elements.length ,
                               gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
+                                  crossAxisCount: 4,
                                   childAspectRatio: 3.5,
 
                                   crossAxisSpacing: 2.0,
