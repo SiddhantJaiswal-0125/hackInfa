@@ -1,51 +1,52 @@
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:heck/models/logData.dart';
 
 import '../Utility/CustomWidgets.dart';
 
 class BarChartSample2 extends StatefulWidget {
-  BarChartSample2({super.key});
-  // final List<LogData> filteredData;
+  BarChartSample2({super.key, required this.filteredData});
+
+  final List<LogData> filteredData;
   final Color leftBarColor = Colors.tealAccent;
   final Color rightBarColor = Colors.red;
-  final Color avgColor =  Colors.orange;
+  final Color avgColor = Colors.orange;
+
   @override
   State<StatefulWidget> createState() => BarChartSample2State();
 }
 
 class BarChartSample2State extends State<BarChartSample2> {
-  final double width = 7;
+  final double width = 14;
 
   late List<BarChartGroupData> rawBarGroups;
   late List<BarChartGroupData> showingBarGroups;
-
+  late List<LogData> filteredData;
   int touchedGroupIndex = -1;
+  double mxY = -1;
 
   @override
   void initState() {
+    filteredData = widget.filteredData;
+
+    List<BarChartGroupData> itm = [];
+
+    for (var i = 0; i < filteredData.length; i++) {
+      var y = double.parse(filteredData[i].dataprocessed);
+      var y2 = double.parse(filteredData[i].targetSuccessRows);
+      print(y2);
+      var b1 = makeGroupData(i, y / 10000, y2/10000);
+      if (mxY < y) mxY = y;
+
+      itm.add(b1);
+    }
+
     super.initState();
-    final barGroup1 = makeGroupData(0, 115, 12);
-    final barGroup2 = makeGroupData(1, 116, 12);
-    final barGroup3 = makeGroupData(2, 118, 5);
-    final barGroup4 = makeGroupData(3, 120, 16);
-    final barGroup5 = makeGroupData(4, 117, 6);
-    final barGroup6 = makeGroupData(5, 119, 1.5);
-    final barGroup7 = makeGroupData(6, 110, 1.5);
 
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-    ];
-
-    rawBarGroups = items;
-
+    print("ITM LENGTH ");
+    print(itm.length);
+    rawBarGroups = itm.sublist(0, 5);
     showingBarGroups = rawBarGroups;
   }
 
@@ -53,78 +54,56 @@ class BarChartSample2State extends State<BarChartSample2> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff203857),
-      body: AspectRatio(
-        aspectRatio: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  CustomWidgets().makeTransactionsIcon(),
-                  const SizedBox(
-                    width: 38,
-                  ),
-                  const Text(
-                    'Execution',
-                    style: TextStyle(color: Colors.white, fontSize: 28),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Text(
-                    'status',
-                    style: TextStyle(color: Color(0xff77839a), fontSize: 20),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 38,
-              ),
-              Expanded(
-                child: BarChart(
-                  BarChartData(
-                    maxY: 300,
 
-                    titlesData: FlTitlesData(
-                      show: true,
-                      rightTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      topTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: bottomTitles,
-                          reservedSize: 42,
-                        ),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 28,
-                          interval: 1,
-                          getTitlesWidget: leftTitles,
-                        ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            CustomWidgets().logo(),
+            const SizedBox(
+              height: 38,
+            ),
+            Expanded(
+              child: BarChart(
+                BarChartData(
+                  maxY: 2000,
+                  titlesData: FlTitlesData(
+                    show: true,
+                    rightTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    topTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: bottomTitles,
+                        reservedSize: 42,
                       ),
                     ),
-                    borderData: FlBorderData(
-                      show: false,
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 28,
+                        interval: 1,
+                        getTitlesWidget: leftTitles,
+                      ),
                     ),
-                    barGroups: showingBarGroups,
-                    gridData: FlGridData(show: false),
                   ),
+                  borderData: FlBorderData(
+                    show: false,
+                  ),
+                  barGroups: showingBarGroups,
+                  gridData: FlGridData(show: true),
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+          ],
         ),
       ),
     );
@@ -132,16 +111,17 @@ class BarChartSample2State extends State<BarChartSample2> {
 
   Widget leftTitles(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Color(0xff7589a2),
+      // color: Color(0xff7589a2),
+      color: Colors.white,
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
     String text;
-    if (value == 0) {
+    if (value == 100) {
       text = '1K';
-    } else if (value == 10) {
+    } else if (value == 450) {
       text = '5K';
-    } else if (value == 19) {
+    } else if (value == 1000) {
       text = '10K';
     } else {
       return Container();
@@ -154,10 +134,13 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St', 'Su'];
+
+    List<String> titles = [];
+    for(LogData li in filteredData)
+        titles.add(li.date);
 
     final Widget text = Text(
-      titles[value.toInt()],
+        titles[value.toInt()].substring(0, 13 ),
       style: const TextStyle(
         color: Color(0xff7589a2),
         fontWeight: FontWeight.bold,
@@ -190,6 +173,6 @@ class BarChartSample2State extends State<BarChartSample2> {
       ],
     );
   }
-
-
 }
+
+//wf_mtt_0013E40Z00000000030B

@@ -68,6 +68,7 @@ flutter:
     - lib/activity.json
     - lib/temp.json
     - lib/dataFeed.json
+    - lib/dataFeed_V1.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

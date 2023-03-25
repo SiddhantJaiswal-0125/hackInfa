@@ -3,21 +3,56 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-class FetchData
-{
-  var data;
-  Future<Set> getData() async {
-    String path = "lib/dataFeed.json";
-    String response = await rootBundle.loadString(path);
-     data = await json.decode(response);
-    Set<String> st = Set();
-    for(var dt in data)
-      st.add(dt['jobName']);
+import '../models/logData.dart';
+
+class FetchData {
+  List<LogData> decodekro( var data )  {
+
+    List<LogData> res = [];
+    for (var dt in data) {
+      if (int.parse(dt['dataProcessed']) > 100 &&
+          int.parse(dt['targetSuccessRows']) > 5)
+        {
+          LogData li = LogData(
+            dt['jobName'],
+            dt['startTime'],
+            dt['endTime'],
+            dt['duration'],
+            dt['dataProcessed'],
+            dt['status'],
+            dt['date'],
+            dt['targetSuccessRows']);
+
+        res.add(li);
+
+        }
+    }
 
 
-    print('RETURNED ST');
-    print(st);
-    return st;
+    return res;
   }
 
+  List<LogData> fetchDataforId(String id, var data) {
+    List<LogData> filteredData = [];
+    for (var dt in data) {
+       if (dt['jobName'] == id) {
+        LogData li = LogData(
+            dt['jobName'],
+            dt['startTime'],
+            dt['endTime'],
+            dt['duration'],
+            dt['dataProcessed'],
+            dt['status'],
+            dt['date'],
+            dt['targetSuccessRows']);
+
+        filteredData.add(li);
+      }
+    }
+
+    print("FILTERED DATA LENGTH");
+    print(filteredData.length);
+
+    return filteredData;
+  }
 }
