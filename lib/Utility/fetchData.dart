@@ -2,10 +2,26 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:heck/models/dtmData.dart';
 
 import '../models/logData.dart';
 
 class FetchData {
+  Future<List<DtmData>> getDtmData() async {
+    String path = "lib/dtm_jobStatus.json";
+    String response = await rootBundle.loadString(path);
+    var data = await json.decode(response);
+    List<DtmData> res = [];
+    for (var dt in data)
+    {
+      DtmData di = DtmData(dt['date'], dt['jobsRunning']);
+      res.add(di);
+    }
+    return res;
+
+
+  }
+
   List<LogData> decodekro( var data )  {
 
     List<LogData> res = [];

@@ -1,21 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:heck/Screens/DtmStatus.dart';
 import 'package:heck/Screens/JobStats.dart';
 import '../models/logData.dart';
 
 class CustomWidgets {
   static const Color backgroundNavyBlue = Color(0xff203857);
 
-  Widget buildSummerCard( LogData li , BuildContext context, var data) {
-
-
-
+  Widget dtmWidget(BuildContext context) {
 
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder:
-            (context)=>JobStat(jobId: li.jobName, data: data)));
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => DtmStatus()));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 6),
+        decoration: BoxDecoration(
+          color: Colors.orange,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 15.0,
+            ),
+          ],
+          border: Border.all(color: Colors.blueAccent),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Text(
+          "Check your DTM Status",
+          style: GoogleFonts.asar(textStyle: TextStyle(fontSize: 16)),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSummerCard(LogData li, BuildContext context, var data) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => JobStat(jobId: li.jobName, data: data)));
       },
       child: Container(
         height: 20,
@@ -53,7 +79,8 @@ class CustomWidgets {
                         );
 
                         final snak = SnackBar(
-                            content: Text('${li.jobName} is copied to your clipboard'));
+                            content: Text(
+                                '${li.jobName} is copied to your clipboard'));
                         ScaffoldMessenger.of(context).showSnackBar(snak);
                       },
                       icon: Icon(
@@ -61,7 +88,6 @@ class CustomWidgets {
                         size: 15,
                       ),
                     ),
-
                   ],
                 ),
                 Row(
@@ -104,7 +130,6 @@ class CustomWidgets {
         ),
       ),
     );
-
   }
 
   Widget makeTransactionsIcon() {
@@ -157,17 +182,14 @@ class CustomWidgets {
     );
   }
 
-
-
   Widget logo(var txt) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-
         const SizedBox(
           width: 8,
         ),
-         Text(
+        Text(
           txt,
           style:
               TextStyle(color: CustomWidgets.backgroundNavyBlue, fontSize: 28),

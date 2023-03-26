@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heck/Screens/JobStats.dart';
 import 'package:heck/Utility/CustomWidgets.dart';
 import 'package:heck/Utility/fetchData.dart';
+import 'package:heck/models/dtmData.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 import 'models/logData.dart';
 
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Set st = Set();
   List <LogData> elements = [];
   bool wait = true;
+  List<DtmData> dtmdata = [];
 
   getData() async {
     String path = "lib/dataFeed_V1.json";
@@ -48,8 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
     elements =  FetchData().decodekro(data) ;
 
 
-    print('LENGTH');
-    print(elements.length);
+
+
+    // print('LENGTH');
+    // print(elements.length);
     for(LogData li in elements)
       st.add(li.jobName);
 
@@ -58,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-    print(elements[0].jobName);
+    // print(elements[0].jobName);
 
 
     setState(() {
@@ -99,11 +103,19 @@ class _HomeScreenState extends State<HomeScreen> {
         : Scaffold(
             appBar: AppBar(
               centerTitle: true,
+
               backgroundColor: Colors.deepOrangeAccent,
-              title: Text(
-                "Tomcat Stats",
-                style: GoogleFonts.lato(
-                    textStyle: TextStyle(letterSpacing: 1.5, fontSize: 40)),
+              title: Row(
+                children: [Spacer(),
+                  Text(
+                    "Tomcat Stats",
+                    style: GoogleFonts.lato(
+                        textStyle: TextStyle(letterSpacing: 1.5, fontSize: 40)),
+                  ),
+                  Spacer(),
+                  CustomWidgets().dtmWidget(context),
+                  SizedBox(width: 8,),
+                ],
               ),
             ),
             body: SingleChildScrollView(
