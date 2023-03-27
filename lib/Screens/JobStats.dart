@@ -8,9 +8,10 @@ import 'package:heck/models/logData.dart';
 import '../Utility/fetchData.dart';
 
 class JobStat extends StatefulWidget {
-  JobStat({Key? key, required this.jobId, required this.data})
+  JobStat({Key? key, required this.jobId, required this.data, required this.light})
       : super(key: key);
   final String jobId;
+  final light;
   var data;
 
   @override
@@ -20,11 +21,13 @@ class JobStat extends StatefulWidget {
 class _JobStatState extends State<JobStat> {
   late String id;
   var data;
+  late bool light;
   List<LogData> filteredData = [];
   @override
   void initState() {
     id = widget.jobId;
     data = widget.data;
+    light = widget.light;
     // TODO: implement initState
    filteredData=  FetchData().fetchDataforId(id, data);
 
@@ -50,7 +53,7 @@ class _JobStatState extends State<JobStat> {
       // body: BarChartSample2(
       //   filteredData: filteredData,
       // ),
-      body: temp4(filteredData: filteredData,),
+      body: temp4(filteredData: filteredData,light : light),
 
       );
   }

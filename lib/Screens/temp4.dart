@@ -5,8 +5,8 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:heck/models/logData.dart';
 
 class temp4 extends StatefulWidget {
-  const temp4({Key? key, required this.filteredData}) : super(key: key);
-
+  const temp4({Key? key, required this.filteredData, this.light}) : super(key: key);
+  final light;
   final List<LogData> filteredData;
 
   @override
@@ -15,17 +15,18 @@ class temp4 extends StatefulWidget {
 
 class _temp4State extends State<temp4> {
   late List<LogData> data;
-
+    late bool light;
   @override
   void initState() {
     data = widget.filteredData;
+    light = widget.light;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: CustomWidgets.backgroundNavyBlue,
+      backgroundColor: light ?Colors.white : Colors.black45,
 
       body: SingleChildScrollView(
         child: Column(
@@ -34,7 +35,7 @@ class _temp4State extends State<temp4> {
             const SizedBox(
               height: 10,
             ),
-            CustomWidgets().logo("Execution"),
+            CustomWidgets().logo("Execution", light),
             const SizedBox(
               height: 8,
             ),
@@ -66,12 +67,12 @@ class _temp4State extends State<temp4> {
             ),
 
 
-            CustomWidgets().logo("Success"),
+            CustomWidgets().logo("Success",light),
             SizedBox(height: 10,),
 
             SfCartesianChart(
               borderColor: Colors.green,
-              palette: [Colors.orangeAccent],
+              palette: [Colors.tealAccent],
 
               primaryXAxis: CategoryAxis(),
               // Chart title

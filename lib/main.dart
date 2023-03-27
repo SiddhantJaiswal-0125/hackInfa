@@ -76,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print("AT INIT");
 
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getData();
     });
@@ -91,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool elementExist = true;
 
   bool test = false;
+  bool light = true;
 
   @override
   Widget build(BuildContext context) {
@@ -101,27 +103,64 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           )
         : Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
+            appBar: PreferredSize(
+            preferredSize: Size.fromHeight(60.0),
 
-              backgroundColor: Colors.deepOrangeAccent,
-              title: Row(
-                children: [Spacer(),
-                  Text(
-                    "Tomcat Stats",
-                    style: GoogleFonts.lato(
-                        textStyle: TextStyle(letterSpacing: 1.5, fontSize: 40)),
+              child: AppBar(
+                centerTitle: true,
+                leading:
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image(image: AssetImage("lib/INFA2.png"),height: 50,width: 50,),
                   ),
-                  Spacer(),
-                  CustomWidgets().dtmWidget(context),
-                  SizedBox(width: 8,),
-                ],
+
+
+
+                backgroundColor:
+                light ? Colors.white54 :
+                CustomWidgets.backgroundNavyBlue,
+                title: Row(
+                  children: [
+                    Spacer(),
+                    Text(
+                      "Task Execution Visualizer",
+                      style: GoogleFonts.lato(
+                          textStyle: TextStyle(
+                              letterSpacing: 1.5, fontSize: 40,
+                          color: light ? CustomWidgets.backgroundNavyBlue : Colors.tealAccent,
+                          )),
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [  GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(light)
+                              light = false;
+                            else
+                              light = true;
+                          });
+
+                        },
+                        child: Icon(
+                            light ? Icons.light_mode : Icons.dark_mode_outlined,
+                        color: light ? Colors.black : Colors.white,
+                        ) ,
+                      ),
+                        SizedBox(width: 40,),
+                        CustomWidgets().dtmWidget(context, true),
+                      ],
+                    ),
+                    SizedBox(width: 8,),
+                  ],
+                ),
               ),
             ),
             body: SingleChildScrollView(
                     child: Column(
                       children: [
                         Container(
+                          color: light ? Colors.white:Colors.black54,
                           height: MediaQuery.of(context).size.height / 3,
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
@@ -143,6 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: SearchBarAnimation(
+
+                                      cursorColour: Colors.deepOrange,
                                       onFieldSubmitted: (var val) {
                                         print("FIELD DONE ");
                                         print(val);
@@ -159,6 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 builder: (context) => JobStat(
                                                   jobId: searchtext,
                                                   data: data,
+                                                  light: true,
                                                 ),
                                               ),
                                             );
@@ -204,14 +246,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   elementExist == false && searchtext.length > 0
                                       ? Center(
                                           child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.blueGrey.withOpacity(0.9),
+                                              borderRadius: BorderRadius.circular(15),
+                                            ),
                                             height: 100,
-                                            color: Colors.blueGrey
-                                                .withOpacity(0.9),
+
+
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(18.0),
                                               child: Text(
-                                                "This Job Id is not present at the moment, \n Please try with a Vaild Job Id. ",
+                                                "Job Id =  ${searchtext} is not present at the moment, \n Please try with a Vaild Job Id. ",
                                                 style: GoogleFonts.lato(
                                                     textStyle: const TextStyle(
                                                         fontSize: 14,
@@ -222,15 +268,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         )
                                       : Container(),
+
+                                  SizedBox(height: 10,)
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        const Divider(
-                          thickness: .8,
-                          color: Colors.black54,
-                        ),
+                         Container(color: light ? Colors.black : Colors.tealAccent,
+                         height: 0.8,),
                         // Container(
                         //   height: MediaQuery.of(context).size.height-100,
                         //   child: GridView.count(
@@ -244,6 +290,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
                         Container(
+                          color: light ? Colors.white :  Colors.black54,
+
                           height:  MediaQuery.of(context).size.height-100,
                             padding: EdgeInsets.all(12.0),
                             child: GridView.builder(
@@ -258,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               itemBuilder: (BuildContext context, int index){
                                 return CustomWidgets().
-                                buildSummerCard( elements[index], context, data);
+                                buildSummerCard( elements[index], context, data, light);
 
                                 Container(height: 10,color: Colors.black,);},
                             ),

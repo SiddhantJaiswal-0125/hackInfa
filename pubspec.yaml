@@ -66,6 +66,10 @@ flutter:
   assets:
     - lib/dataFeed_V1.json
     - lib/dtm_jobStatus.json
+    - lib/bg.png
+    - lib/infa.png
+    - lib/INFA2.png
+
 
   #   - images/a_dot_ham.jpeg
 

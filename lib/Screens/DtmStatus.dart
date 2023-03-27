@@ -6,7 +6,8 @@ import '../Utility/fetchData.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DtmStatus extends StatefulWidget {
-  const DtmStatus({Key? key}) : super(key: key);
+  final light;
+  const DtmStatus({Key? key, this.light}) : super(key: key);
 
   @override
   State<DtmStatus> createState() => _DtmStatusState();
@@ -15,6 +16,7 @@ class DtmStatus extends StatefulWidget {
 class _DtmStatusState extends State<DtmStatus> {
   bool wait = true;
   List<DtmData> dtmdata = [];
+  late bool light;
 
   getData() async {
     dtmdata = await FetchData().getDtmData();
@@ -31,6 +33,7 @@ class _DtmStatusState extends State<DtmStatus> {
     // TODO: implement initState
     print("AT DTM STATUS");
 
+    light = widget.light;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getData();
     });
@@ -41,47 +44,53 @@ class _DtmStatusState extends State<DtmStatus> {
   Widget build(BuildContext context) {
     return wait ? Center(
       child: CircularProgressIndicator(color: Colors.orange,),) : Scaffold(
+
+      appBar: AppBar(title: Text(""),
+      backgroundColor: light ? Colors.orangeAccent : CustomWidgets.backgroundNavyBlue ,),
       body: SingleChildScrollView(
 
 
-      child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(
-          height: 10,
-        ),
-        CustomWidgets().logo("DTM"),
-        const SizedBox(
-          height: 8,
-        ),
-        //Initialize the chart widget
-        SfCartesianChart(
-          borderColor: Colors.red,
+      child: Container(
 
-          primaryXAxis: CategoryAxis(),
-          // Chart title
+        child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          CustomWidgets().logo("DTM",light),
+          const SizedBox(
+            height: 8,
+          ),
+          //Initialize the chart widget
+          SfCartesianChart(
+            borderColor: Colors.red,
 
-          // Enable legend
-          legend: Legend(isVisible: true),
-          // Enable tooltip
-          tooltipBehavior: TooltipBehavior(enable: true),
-          series: <ChartSeries<DtmData, String>>[
-            LineSeries<DtmData, String>(
-              dataSource: dtmdata,
-              xValueMapper: (DtmData dt, _) => dt.date.substring(0, 10),
-              yValueMapper: (DtmData dt, _) => num.parse(dt.noOfJobs),
-              name: 'Number of Jobs',
-              // Enable data label
-              dataLabelSettings: DataLabelSettings(isVisible: true),
-            ),
-          ],
-        ),
+            primaryXAxis: CategoryAxis(),
+            // Chart title
 
-        SizedBox(
-          height: 45,
-        ),
-      ],
+            // Enable legend
+            legend: Legend(isVisible: true),
+            // Enable tooltip
+            tooltipBehavior: TooltipBehavior(enable: true),
+            series: <ChartSeries<DtmData, String>>[
+              LineSeries<DtmData, String>(
+                dataSource: dtmdata,
+                xValueMapper: (DtmData dt, _) => dt.date.substring(0, 10),
+                yValueMapper: (DtmData dt, _) => num.parse(dt.noOfJobs),
+                name: 'Number of Jobs',
+                // Enable data label
+                dataLabelSettings: DataLabelSettings(isVisible: true),
+              ),
+            ],
+          ),
+
+          SizedBox(
+            height: 45,
+          ),
+        ],
     ),
+      ),
     ),
     );
   }

@@ -8,12 +8,12 @@ import '../models/logData.dart';
 class CustomWidgets {
   static const Color backgroundNavyBlue = Color(0xff203857);
 
-  Widget dtmWidget(BuildContext context) {
+  Widget dtmWidget(BuildContext context, bool light) {
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DtmStatus()));
+            context, MaterialPageRoute(builder: (context) => DtmStatus( light:light)));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 6),
@@ -35,20 +35,23 @@ class CustomWidgets {
     );
   }
 
-  Widget buildSummerCard(LogData li, BuildContext context, var data) {
+  Widget buildSummerCard(LogData li, BuildContext context, var data , bool light) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => JobStat(jobId: li.jobName, data: data)));
+                builder: (context) => JobStat(jobId: li.jobName, data: data,light:light)));
       },
       child: Container(
+        color: light ? Colors.white : Colors.blueGrey,
+
         height: 20,
         width: 400,
         child: Padding(
           padding: const EdgeInsets.all(1.0),
           child: Material(
+            color: light ? Colors.white : Colors.black54,
             borderRadius: BorderRadius.circular(10),
             elevation: 10,
             child: Column(
@@ -59,10 +62,10 @@ class CustomWidgets {
                     const Padding(
                       padding: EdgeInsetsDirectional.symmetric(horizontal: 10),
                     ),
-                    const Text(
+                     Text(
                       "Job Name : ",
                       style: TextStyle(
-                          color: CustomWidgets.backgroundNavyBlue,
+                          color: light ? CustomWidgets.backgroundNavyBlue : Colors.white,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
@@ -86,6 +89,7 @@ class CustomWidgets {
                       icon: Icon(
                         Icons.copy,
                         size: 15,
+                        color: light  ? Colors.black : Colors.tealAccent,
                       ),
                     ),
                   ],
@@ -98,7 +102,7 @@ class CustomWidgets {
                     Text(
                       "Data Processed : ",
                       style: TextStyle(
-                          color: CustomWidgets.backgroundNavyBlue,
+                          color: light ? CustomWidgets.backgroundNavyBlue : Colors.white,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
@@ -115,7 +119,7 @@ class CustomWidgets {
                     Text(
                       "Date: ",
                       style: TextStyle(
-                          color: CustomWidgets.backgroundNavyBlue,
+                          color: light ? CustomWidgets.backgroundNavyBlue : Colors.white,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
@@ -182,7 +186,7 @@ class CustomWidgets {
     );
   }
 
-  Widget logo(var txt) {
+  Widget logo(var txt, bool light) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -192,14 +196,14 @@ class CustomWidgets {
         Text(
           txt,
           style:
-              TextStyle(color: CustomWidgets.backgroundNavyBlue, fontSize: 28),
+              TextStyle(color: light ?CustomWidgets.backgroundNavyBlue : Colors.tealAccent, fontSize: 28),
         ),
         const SizedBox(
           width: 4,
         ),
-        const Text(
+         Text(
           'Status',
-          style: TextStyle(color: Color(0xff77839a), fontSize: 24),
+          style: TextStyle(color: light ?   Color(0xff77839a):Colors.white, fontSize: 24),
         ),
       ],
     );
