@@ -46,24 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
     String path = "lib/dataFeed_V1.json";
     String response = await rootBundle.loadString(path);
     data = await json.decode(response);
-
     elements =  FetchData().decodekro(data) ;
 
-
-
-
-    // print('LENGTH');
-    // print(elements.length);
     for(LogData li in elements)
       st.add(li.jobName);
 
     print("-----------------------------------------------------");
-
-
-
-
-    // print(elements[0].jobName);
-
 
     setState(() {
       wait = false;
@@ -250,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               color: Colors.blueGrey.withOpacity(0.9),
                                               borderRadius: BorderRadius.circular(15),
                                             ),
-                                            height: 100,
+                                            height: 80,
 
 
                                             child: Padding(

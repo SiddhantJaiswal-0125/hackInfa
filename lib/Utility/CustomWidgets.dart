@@ -41,7 +41,7 @@ class CustomWidgets {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => JobStat(jobId: li.jobName, data: data,light:light)));
+                builder: (context) => JobStat(jobId: li.jobName, data: data,light:true)));
       },
       child: Container(
         color: light ? Colors.white : Colors.blueGrey,
