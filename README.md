@@ -8,11 +8,9 @@
 ![alt text](http://icons.iconarchive.com/icons/paomedia/small-n-flat/64/star-alt-icon.png) 
 * Star this Repo. if you like the app & support me, this keeps me motivated and keep going for further development
 
-A Web Application where the user can upload its important file very securely and can provide access to limited users who can access the file all around the world through this application.
-It uses realtime database to provide a better user experience.
+
 
 Going with Flutter is a easy choice with its quick development time and fast execution times.
-Firebase as the backend and storage solution makes it very easy to scale .
 
 
 
@@ -28,16 +26,10 @@ Firebase as the backend and storage solution makes it very easy to scale .
 
 
 
-# 🔦 Any other specific thing you want to highlight?
-- This idea is completely feasible as of now because the technology stack used is cross platform allowing reach for a larger number of audience
+# 🔦 What is it?
+- A web app that helps to analyze Tomcat log of a DTM (Data Transformation Manager) process and shows a graph of the number of data processed within Informatica tool is a powerful tool for monitoring and troubleshooting data transformation processes. This web app allows users to easily track the progress of their DTM process and quickly identify any issues that may arise.
 
-- The backend can be scaled up infinitely to match the scale of audience required to carter using the industry standard technologies like Kubernetes. The same is true for the no-sql database mongodb that can be scaled horizontally using concepts of sharding.
-- Some of our **Future Aspects**
-
-   - Encrypt the File using some Encryption Algorithm.
-   - Multiple UI-Themes.
-   - Add realtime alert messages on data-access by others.
-   - Add inbuilt App-Lock features.
+With this web app, users can view and analyze the Tomcat log data in real-time to identify any errors, warnings, or other issues that may occur during the DTM process. The app can also display the number of data processed within the Informatica tool, providing users with valuable insights into the performance and efficiency of their data transformation process.
 
 
 
