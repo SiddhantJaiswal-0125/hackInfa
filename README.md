@@ -1,8 +1,8 @@
-# EncryptU - Mobile - Web Application
+# Task Execution Visualizer
 
 ![](https://img.shields.io/badge/Language-Dart-blue)   
 ![](https://img.shields.io/badge/SDK-Flutter-yellow)   
-![](https://img.shields.io/badge/Download-EncryptU-orange)
+![](https://img.shields.io/badge/Download-Informatica-orange)
 
 
 ![alt text](http://icons.iconarchive.com/icons/paomedia/small-n-flat/64/star-alt-icon.png) 
