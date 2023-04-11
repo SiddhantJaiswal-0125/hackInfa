@@ -42,7 +42,7 @@ Firebase as the backend and storage solution makes it very easy to scale .
 
 
 ## Screenshots
-<img src="images/UILight.png" width="1200" height= "500">     
-<img src="images/UIDark.png" width="1200" height= "500">
-<img src="images/JobGraph.png"  width="1200" height= "500">     
-<img src="images/DTMEngine.png"  width="1200" height= "500">  
+<img src="images/UILight.png" width="1200" height= "700">     
+<img src="images/UIDark.png" width="1200" height= "700">
+<img src="images/JobGraph.png"  width="1200" height= "700">     
+<img src="images/DTMEngine.png"  width="1200" height= "700">  
